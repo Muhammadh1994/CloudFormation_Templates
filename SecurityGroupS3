@@ -1,0 +1,58 @@
+{
+    "Description": "To generate security group",
+    "Parameters": {
+        "EnvironmentName": {
+            "Description": "A name that will be prefixed to resource name",
+            "Type": "String"
+        },
+        "VPC": {
+            "Description": "The VPC to which the paticular security group should be deployed to",
+            "Type": "AWS::EC2::VPC::Id"
+        },
+        "SSHL": {
+            "Description": "Enter the CIDR of ssh",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "TestSecurityGroup1": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "This is a test Security Group",
+                "GroupName": "TestCase1",
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "Description": "Specifies an inbound rule for a security group.",
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": {
+                            "Ref": "SSHL"
+                        }
+                    },
+                    {
+                        "Description": "Specifies an inbound rule for a security group.",
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "TestS3Bucket": {
+            "Type": "AWS::S3::Bucket"
+        }
+    },
+    "Outputs": {
+        "TestSecurityGroup1": {
+            "Description": "Gives the information(ID) of the Security Group",
+            "Value": {
+                "Ref": "TestSecurityGroup1"
+            }
+        }
+    }
+}

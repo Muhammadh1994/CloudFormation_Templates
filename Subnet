@@ -1,0 +1,69 @@
+{
+    "Description": "Creating subnets for vpc",
+    "Parameters": {
+        "VPC": {
+            "Description": "The VpcId the subnets belong to",
+            "Type": "AWS::EC2::VPC::Id"
+        },
+        "CIDRPublic": {
+            "Description": "Give the IpV4 address",
+            "Type": "String"
+        },
+        "CIDRPrivate": {
+            "Description": "Give the IpV4 address",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "PublicSubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-2a",
+                "CidrBlock": {
+                    "Ref": "CIDRPublic"
+                },
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "First",
+                        "Value": "Subnet"
+                    }
+                ]
+            }
+        },
+        "PrivateSubnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "us-east-2a",
+                "CidrBlock": {
+                    "Ref": "CIDRPrivate"
+                },
+                "VpcId": {
+                    "Ref": "VPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "second",
+                        "Value": "Subnet"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "PublicSubnet": {
+            "Description": "Gives the Public subnet IDs",
+            "Value": {
+                "Ref": "PublicSubnet"
+            }
+        },
+        "PrivateSubnet": {
+            "Description": "Gives the Private subnet IDs",
+            "Value": {
+                "Ref": "PrivateSubnet"
+            }
+        }
+    }
+}

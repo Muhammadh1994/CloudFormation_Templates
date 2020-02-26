@@ -1,0 +1,23 @@
+{
+    "Description": "To create an Internet Gateway",
+    "Resources": {
+        "InternetGateWay": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "InternetGateWay1",
+                        "Value": "CFN"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "IG": {
+            "Value": {
+                "Ref": "InternetGateWay"
+            }
+        }
+    }
+}

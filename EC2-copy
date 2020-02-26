@@ -1,0 +1,48 @@
+{
+    "Description": "Creates an EC2 Instance",
+    "Parameters": {
+        "VPC": {
+            "Description": "The VpcId the Instance should be launched in",
+            "Type": "AWS::EC2::VPC::Id"
+        },
+        "Subnet": {
+            "Description": "The Subnet Id",
+            "Type": "AWS::EC2::Subnet::Id"
+        },
+        "SG": {
+            "Type": "AWS::EC2::SecurityGroup::Id"
+        }
+    },
+    "Resources": {
+        "InstancePubic": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0e38b48473ea57778",
+                "InstanceType": "t2.micro",
+                "KeyName": "abdullahcfn",
+                "NetworkInterfaces": [
+                    {
+                        "AssociatePublicIpAddress": "true",
+                        "DeviceIndex": "0",
+                        "SubnetId": {
+                            "Ref": "Subnet"
+                        },
+                        "GroupSet": [
+                            {
+                                "Ref": "SG"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "EC2I": {
+            "Description": "Gives the ID of EC2",
+            "Value": {
+                "Ref": "InstancePubic"
+            }
+        }
+    }
+}

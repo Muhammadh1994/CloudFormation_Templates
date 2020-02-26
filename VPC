@@ -1,0 +1,46 @@
+{
+    "Description": "Creating a new Virtual private Cloud.",
+    "Parameters": {
+        "CIDR": {
+            "Description": "The IpV4 address for the VCP",
+            "Type": "String"
+        },
+        "IT": {
+            "Description": "The allowed tenancy of instances launched into the VPC. Enter default or dedicated",
+            "Type": "String",
+            "AllowedValues": [
+                "default",
+                "dedicated"
+            ],
+            "Default": "default"
+        }
+    },
+    "Resources": {
+        "VirtualPrivateCloud": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": {
+                    "Ref": "CIDR"
+                },
+                "EnableDnsHostnames": "true",
+                "EnableDnsSupport": "true",
+                "InstanceTenancy": {
+                    "Ref": "IT"
+                },
+                "Tags": [
+                    {
+                        "Key": "first",
+                        "Value": "CFNVPC"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "VirtualPrivateCloud": {
+            "Value": {
+                "Ref": "VirtualPrivateCloud"
+            }
+        }
+    }
+}
