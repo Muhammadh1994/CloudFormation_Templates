@@ -1,0 +1,91 @@
+{
+
+    "Description": "Creating A load ballancer",
+
+    "Parameters": {
+
+        "Sbns": {
+
+            "Description": "Choose the subnets",
+
+            
+
+            "Type": "List<AWS::EC2::Subnet::Id>"
+
+        },
+
+        "Sg": {
+
+            "Description": "Select the security group",
+
+            "Type": "List<AWS::EC2::SecurityGroup::Id>"
+
+        },
+
+        "IpType": {
+
+            "Description": "The Ip address type  use either dualstack or ipv4",
+
+            "Type": "String",
+
+            "AllowedValues": [
+
+                "dualstack",
+
+                "ipv4"
+
+            ]
+
+        }
+
+    },
+
+    "Resources": {
+
+        "Loadbalancer1": {
+
+            "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+
+            "Properties": {
+
+                "IpAddressType": {
+
+                    "Ref": "IpType"
+
+                },
+
+                "Name": "Alb",
+
+                "SecurityGroups": {
+
+                    "Ref": "Sg"
+
+                },
+
+                "Subnets": {
+
+                    "Ref": "Sbns"
+
+                }
+
+            }
+
+        }
+
+    },
+
+    "Outputs": {
+
+        "LB": {
+
+            "Value": {
+
+                "Ref": "Loadbalancer1"
+
+            }
+
+        }
+
+    }
+
+}
