@@ -1,0 +1,73 @@
+{
+
+    "Description": "To create an Auto Scaling group",
+
+    "Parameters": {
+
+        "LC": {
+
+            "Description": "The EC2 instance ID to scale",
+
+            "Type": "AWS::EC2::Instance::Id"
+
+        },
+
+        "SubId": {
+
+            "Description": "The VPCA list of subnet IDs for a virtual private cloud (VPC). If you specify VPCZoneIdentifier with AvailabilityZones, the subnets that you specify for this property must reside in those Availability Zones.",
+
+            "Type": "List<AWS::EC2::Subnet::Id>"
+
+        }
+
+    },
+
+    "Resources": {
+
+        "ASG": {
+
+            "Type": "AWS::AutoScaling::AutoScalingGroup",
+
+            "Properties": {
+
+                "AutoScalingGroupName": "CFNASG",
+
+                "InstanceId": {
+
+                    "Ref": "LC"
+
+                },
+
+                "MaxSize": "500",
+
+                "MinSize": "1",
+
+                "VPCZoneIdentifier": {
+
+                    "Ref": "SubId"
+
+                }
+
+            }
+
+        }
+
+    },
+
+    "Outputs": {
+
+        "ASG": {
+
+            "Description": "Gives the ASG Id",
+
+            "Value": {
+
+                "Ref": "ASG"
+
+            }
+
+        }
+
+    }
+
+}
